@@ -1,0 +1,345 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="{{ SITEURL}}/theme/css/votre.css" media="all">
+        <link rel="stylesheet" href="{{ SITEURL}}/theme/css/normalize.css" media="all">
+        <link href='https://fonts.googleapis.com/css?family=Exo+2:400,300,700,300italic,400italic,700italic,900,900italic' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Baloo' rel='stylesheet' type='text/css'> 
+        <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet'>
+        
+        <script type="text/javascript" src="{{ SITEURL }}/theme/js/modernizr.js"></script>
+		<script src="{{ SITEURL }}/theme/js/custom.modernizr.js"></script>
+        
+        <link href="https://fonts.googleapis.com/css?family=Ravi+Prakash" rel="stylesheet"> 
+        
+        <link rel="stylesheet" href="{{ SITEURL }}/theme/css/pygment.css" media="all">
+        <link rel="stylesheet" href="{{ SITEURL }}/theme/css/solarized.css" media="all">
+        {% if not FOUNDATION_PYGMENT_THEME %}
+		{% set FOUNDATION_PYGMENT_THEME = 'monakai' %}
+		{% endif %}
+		
+		
+		{% block head %}
+        <title>{% block title %}{{ SITENAME }}{% endblock title %}</title>
+        <meta charset="utf-8" />
+        {% if FEED_ALL_ATOM %}
+        <link href="{{ FEED_DOMAIN }}/{{ FEED_ALL_ATOM }}" type="application/atom+xml" rel="alternate" title="{{ SITENAME }} Full Atom Feed" />
+        {% endif %}
+        {% if FEED_ALL_RSS %}
+        <link href="{{ FEED_DOMAIN }}/{{ FEED_ALL_RSS }}" type="application/rss+xml" rel="alternate" title="{{ SITENAME }} Full RSS Feed" />
+        {% endif %}
+        {% if FEED_ATOM %}
+        <link href="{{ FEED_DOMAIN }}/{{ FEED_ATOM }}" type="application/atom+xml" rel="alternate" title="{{ SITENAME }} Atom Feed" />
+        {% endif %}
+        {% if FEED_RSS %}
+        <link href="{{ FEED_DOMAIN }}/{{ FEED_RSS }}" type="application/rss+xml" rel="alternate" title="{{ SITENAME }} RSS Feed" />
+        {% endif %}
+        {% if CATEGORY_FEED_ATOM and category %}
+        <link href="{{ FEED_DOMAIN }}/{{ CATEGORY_FEED_ATOM|format(category.slug) }}" type="application/atom+xml" rel="alternate" title="{{ SITENAME }} Categories Atom Feed" />
+        {% endif %}
+        {% if CATEGORY_FEED_RSS and category %}
+        <link href="{{ FEED_DOMAIN }}/{{ CATEGORY_FEED_RSS|format(category.slug) }}" type="application/rss+xml" rel="alternate" title="{{ SITENAME }} Categories RSS Feed" />
+        {% endif %}
+        {% if TAG_FEED_ATOM and tag %}
+        <link href="{{ FEED_DOMAIN }}/{{ TAG_FEED_ATOM|format(tag.slug) }}" type="application/atom+xml" rel="alternate" title="{{ SITENAME }} Tags Atom Feed" />
+        {% endif %}
+        {% if TAG_FEED_RSS and tag %}
+        <link href="{{ FEED_DOMAIN }}/{{ TAG_FEED_RSS|format(tag.slug) }}" type="application/rss+xml" rel="alternate" title="{{ SITENAME }} Tags RSS Feed" />
+        {% endif %}
+        {% include "analytics.html" %}
+
+		<!-- mathjax config similar to math.stackexchange -->
+		<script type="text/x-mathjax-config">
+			MathJax.Hub.Config({
+				jax: ["input/TeX", "output/HTML-CSS"],
+				tex2jax: {
+					inlineMath: [ ['$', '$'] ],
+					displayMath: [ ['$$', '$$']],
+					processEscapes: true,
+					skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+				},
+				messageStyle: "none",
+				"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+			});
+			</script>
+			<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+			
+			
+			
+	{% endblock head %}      
+	
+	
+
+<body id="grad1">
+
+<div class="pages">
+        <ul class="w3-hide-small w3-hide-medium">
+            <li class="home"><a href="{{ SITEURL }}/index.html">Home</a></li>
+            {% for p in pages %}
+            <li {% if p == page %} class="active"{% endif %}><a href="{{ SITEURL }}/{{ p.url }}">{{ p.title }}</a></li>
+            {% endfor %}
+            <li><a href="blog.andyzs.net">blogs</a></li>
+			 <li class="w3-right">
+				 <form method="get" action="{{ SITEURL }}/search.html" onsubmit="return validateForm(this.elements['q'].value);" id="search">
+				<input name="q" type="text" size="40" placeholder="Search..."  id="tipue_search_input"/>
+				</form>
+			  </li>
+        </ul>
+    </div>   
+    
+    <!-- mobilenavbar -->
+<div class="off-canvas-wrap" data-offcanvas>
+	<div class="inner-wrap">
+		<nav class="tab-bar hide-for-large">
+			<section class="left-small hide-for-large">
+			<a class="left-off-canvas-toggle menu-icon" href="#"><span></span></a>
+			</section>
+
+			<section class="middle tab-bar-section hide-for-large">
+			<h1 class="title">{{ SITENAME }}</h1>
+			</section>
+
+      
+		</nav>
+    
+		<aside class="left-off-canvas-menu">
+		<ul class="off-canvas-list">
+        <li><label>{{ SITEURL }}</label></li>
+        <li><a href="{{ SITEURL }}/index.html">Home</a></li>
+        <li>
+			<form method="get" action="{{ SITEURL }}/search.html" onsubmit="return validateForm(this.elements['q'].value);" id="search">
+				<input name="q" type="text" size="40" placeholder="Search..."  id="tipue_search_input"/>
+				</form>
+		</li>
+		{% for p in pages %}
+            <li {% if p == page %} class="active"{% endif %}><a href="{{ SITEURL }}/{{ p.url }}">{{ p.title }}</a></li>
+        {% endfor %}
+        <li><a href="blog.andyzs.net">blogs</a></li>
+        <li><label>Categories</label></li>
+        {% for cat, l in categories %}
+			<li {% if cat == category %}class="active"{% endif %}><a href="{{ SITEURL }}/{{ cat.url }}">{{ cat }}</a> ({{ l | length }}) </li>
+		{% endfor %}
+        
+			
+		</ul>
+		</aside>
+		<!-- end mobilenavbar-->
+
+<!-- w3-content defines a container for fixed size centered content, 
+and is wrapped around the whole page content, except for the footer in this example -->
+<div class="w3-content" style="max-width:1280px">
+
+		<!-- Header -->
+<header class="w3-container w3-center w3-padding-32"> 
+  <h1>{{ SITENAME }}</h1>
+  <p>{{ SITESUBTITLE }}</p>
+</header>
+
+<!-- Grid -->
+<div class="w3-row">
+
+
+<div class="w3-col l9 s12">
+  <!-- Blog entry -->
+  
+		  {% block content %}
+                {% endblock %}
+       
+   </div>
+   
+   <!-- navside -->
+<div class="w3-col l3 w3-hide-medium w3-hide-small">
+	<!--search-->
+	<div class="w3-card w3-margin w3-margin-top">
+		<div class="side-nav w3-container w3-padding">
+			<form method="get" action="{{ SITEURL }}/search.html" onsubmit="return validateForm(this.elements['q'].value);" id="search">
+				<input name="q" type="text" size="40" placeholder="Search..."  id="tipue_search_input"/>
+			</form>
+			</br>
+			</br>
+		</div>
+	</div>
+  <!-- Categories -->
+	<div class="w3-card w3-margin">
+		<div class="side-nav w3-container w3-padding">
+			<h2>Categories</h2>
+			<hr>
+			<ul class="w3-white">
+			{% for cat,l in categories %}
+			<li {% if cat==category %} class="active w3-padding-16">{% endif %}><a href="{{ SITEURL }}/{{ cat.url }}"><b>{{ cat }}</b></a> ({{ l | length }})</li>
+			{% endfor %}
+			</ul>
+		</div>
+	</div>
+	
+  <!--Monthly Archive-->
+	<div class="w3-card w3-margin">
+		<div class="side-nav w3-container w3-padding">
+			<h2>Monthly Archive</h2>
+			<hr>
+			<ul class="w3-black">
+				{% if MONTH_ARCHIVE_SAVE_AS %}
+				{% for year, date_year in dates|groupby( 'date.year' )|sort(reverse=True) %}
+								{% for month, articles in date_year|groupby( 'date.month' )|sort(reverse=True) %}
+									<li class="active"><a href="/{{ MONTH_ARCHIVE_SAVE_AS.format(date=articles[0].date) }}">{{ articles[0].date.strftime('%B') }} {{ year }} ({{ articles|count }})</a></li>
+								{% endfor %}
+				{% endfor %}
+				{% endif %}
+			</ul>
+		</div>
+	</div>
+						
+  <!--Cloud-tags-->
+	<div class="w3-card w3-margin">
+		<div class="side-nav w3-container w3-padding">
+			<h2>Tag Cloud</h2>
+			<hr>
+			<ul class="tagcloud">
+			{% for tag in tag_cloud %}
+				<li class="tag-{{ tag.1 }}">
+				<a href="{{ SITEURL }}/{{ tag.0.url }}">
+				{{ tag.0 }}
+                {% if TAG_CLOUD_BADGE %}
+                <span class="badge">{{ tag.2 }}</span>
+                {% endif %}
+				</a>
+				</li>
+			{% endfor %}
+			</ul>
+		</div>
+	</div>
+</div>
+
+
+<div class="scroll-top-wrapper ">
+	<span class="scroll-top-inner">
+		<i class="fa fa-2x fa-angle-double-up"></i>
+	</span>
+</div>
+
+	
+	<a class="exit-off-canvas"></a>
+</div><!--off-canvas inner-->
+</div><!--off-canvas wrap-->
+          
+          
+          
+          {% block js_script %}
+<script src="{{ SITEURL }}/theme/js/jquery.min.js"></script>
+<script src="{{ SITEURL }}/theme/js/foundation.min.js"></script>
+<script src="{{ SITEURL }}/{{THEME_STATIC_DIR}}/js/vendor/what-input.min.js"></script>
+<script src="{{ SITEURL }}/{{THEME_STATIC_DIR}}/js/foundation.min.js"></script>
+<script src="{{ SITEURL }}/theme/js/fastclick.js"></script>
+
+
+<script>
+ $(document).foundation();
+
+  function validateForm(query){
+                return (query.length > 0);
+            }
+</script>
+<script>
+$(document).foundation();
+</script>
+
+
+
+<script>
+$(function(){
+ 
+	$(document).on( 'scroll', function(){
+ 
+		if ($(window).scrollTop() > 30) {
+			$('.scroll-top-wrapper').addClass('show');
+		} else {
+			$('.scroll-top-wrapper').removeClass('show');
+		}
+	});
+});
+</script>
+
+<script>
+ 
+$(function(){
+ 
+	$(document).on( 'scroll', function(){
+ 
+		if ($(window).scrollTop() > 100) {
+			$('.scroll-top-wrapper').addClass('show');
+		} else {
+			$('.scroll-top-wrapper').removeClass('show');
+		}
+	});
+ 
+	$('.scroll-top-wrapper').on('click', scrollToTop);
+});
+ 
+function scrollToTop() {
+	verticalOffset = typeof(verticalOffset) != 'undefined' ? verticalOffset : 0;
+	element = $('body');
+	offset = element.offset();
+	offsetTop = offset.top;
+	$('html, body').animate({scrollTop: offsetTop}, 500, 'linear');
+}
+</script>
+
+<script>
+	var form = $('form'),
+    search = $('#search');
+
+form.submit(function(e) {
+    e.preventDefault();
+
+    search.addClass('searching').val('');
+
+    setTimeout(function() {
+        search.removeClass('searching');
+    }, 3600);
+});
+
+/* what's with input padding? :/ */
+if ($.browser.mozilla) {
+    search.css('padding', '3px');
+</script>
+  				{% endblock %}
+  
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		</dev>
+		
+		
+</body>
+</html>
